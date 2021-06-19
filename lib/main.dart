@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Pricer/Pricing.dart';
 
 void main() {
   runApp(const MyApp());
@@ -103,13 +104,18 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headline4,
             ),
             HdbTable(),
-            MyStatelessWidget(),
+            PriceTable(),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => PricingFormRoute()),
+            );
+        },
+        tooltip: 'Price HDB',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
@@ -134,8 +140,8 @@ class _HdbTableState extends State<HdbTable> {
 
 
 /// This is the stateless widget that the main application instantiates.
-class MyStatelessWidget extends StatelessWidget {
-  const MyStatelessWidget({Key? key}) : super(key: key);
+class PriceTable extends StatelessWidget {
+  const PriceTable({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -176,3 +182,17 @@ class MyStatelessWidget extends StatelessWidget {
   }
 }
 
+
+class PricingFormRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Price an HDB"),
+      ),
+      body: Center(
+        child: PricingForm(),
+      ),
+    );
+  }
+}
