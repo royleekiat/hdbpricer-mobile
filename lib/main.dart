@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Pricer/pricingForm.dart';
+import 'Pricer/pricing.dart';
 
 void main() {
   runApp(const MyApp());
