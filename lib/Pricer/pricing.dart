@@ -151,23 +151,7 @@ class PricingFormState extends State<PricingForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          /*
-              TextFormField(
-
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.add_location_outlined),
-                  hintText: 'Where is this?',
-                  labelText: 'Town *',
-                )         ,
-                // The validator receives the text that the user has entered.
-                
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),*/
+          
           DropdownButtonFormField(
             decoration: const InputDecoration(
               icon: Icon(Icons.add_location_outlined),
@@ -282,6 +266,11 @@ class PricingFormState extends State<PricingForm> {
               FilteringTextInputFormatter.digitsOnly,
               LengthLimitingTextInputFormatter(3),
             ],
+            onChanged: (value) {
+              setState(() {
+                floor_area_sqm = int.parse(value);
+              });
+            },
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter the floor area in square meters';
