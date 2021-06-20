@@ -1,5 +1,36 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'package:hdbpricermobile/Models/hdb.dart';
+
+Future<Hdb> priceHDB(String town, String flat_type, String storey_range, int floor_area_sqm, String lease_commence_date) async {
+  final response = await http.post(
+    Uri.parse('https://hdbpricer-be.herokuapp.com/hdbs'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, dynamic>{
+      'town': town,
+      'flat_type': flat_type,
+      'storey_range': storey_range,
+      'floor_area_sqm': floor_area_sqm,
+      'lease_commence_date': lease_commence_date,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 CREATED response,
+    // then parse the JSON.
+    return Hdb.fromJson(jsonDecode(response.body)['hdbs'][0]);
+  } else {
+    // If the server did not return a 200 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to price HDB.');
+  }
+}
 
 // Create a Form widget.
 class PricingForm extends StatefulWidget {
@@ -19,7 +50,10 @@ class PricingFormState extends State<PricingForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<PricingFormState>.
   final _formKey = GlobalKey<FormState>();
-  var yearController = TextEditingController();
+  final yearController = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
+  Future<Hdb>? _futureHdb;
+
   final List<String> _towns = [
     'ANG MO KIO',
     'BEDOK',
@@ -81,7 +115,7 @@ class PricingFormState extends State<PricingForm> {
   String flat_type = '';
   String storey_range = '';
   int floor_area_sqm = 0;
-  int lease_commence_date = 0;
+  String lease_commence_date = '';
 
   @override
   void initState() {
@@ -103,7 +137,7 @@ class PricingFormState extends State<PricingForm> {
                   lastDate: DateTime((DateTime.now().year - 5)),
                   onChanged: (val) {
                     setState(() {
-                      lease_commence_date = val.year;
+                      lease_commence_date = val.year.toString();
                     });
                     yearController.text = val.year.toString();
                     Navigator.pop(context);
@@ -283,8 +317,15 @@ class PricingFormState extends State<PricingForm> {
                   // If the form is valid, display a snackbar. In the real world,
                   // you'd often call a server or save the information in a database.
                   ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Loading price engine results')));
-                  Navigator.pop(context);
+                      SnackBar(duration: const Duration(seconds: 1),content: Text('Pricing in progress')));
+
+                  setState(() {
+                    _futureHdb = priceHDB(town,flat_type,storey_range,floor_area_sqm,lease_commence_date);
+                  });
+
+                  
+
+                  Navigator.pop(context, _futureHdb);
                 }
               },
               child: Text('Submit'),
@@ -294,4 +335,8 @@ class PricingFormState extends State<PricingForm> {
       ),
     );
   }
+
 }
+
+
+

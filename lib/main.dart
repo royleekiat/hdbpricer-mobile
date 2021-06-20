@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hdbpricermobile/Models/hdb.dart';
 import 'Pricer/pricing.dart';
 
 void main() {
@@ -49,18 +50,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  Hdb hdb = Hdb(
+      flat_type: '',
+      town: '',
+      lease_commence_date: '',
+      resale_price: 0,
+      storey_range: '',
+      floor_area_sqm: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -96,24 +92,122 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'Click the "+" button to price your HDB now',
-            ),
+            /*
+            (hdb.resale_price == 0)
+                ? Text('')
+                : SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: DataTable(
+                      columns: const <DataColumn>[
+                        DataColumn(
+                          label: Text(
+                            'Town',
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Flat type',
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Storey range',
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Floor area (sqm)',
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Lease Commence Date',
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Text(
+                            'Resale Price',
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                        ),
+                      ],
+                      rows: const <DataRow>[
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text('ANG MO KIO')),
+                            DataCell(Text('2 ROOM	')),
+                            DataCell(Text('10 TO 12	')),
+                            DataCell(Text('36')),
+                            DataCell(Text('2000	')),
+                            DataCell(Text('S\$ 100234')),
+                          ],
+                        ),
+                      ],
+                    )), 
+            */
+            (hdb.resale_price == 0)
+                ? Text('Click on the "+" button below to price an HDB')
+                : Card(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const ListTile(
+                          leading: Icon(Icons.house),
+                          title: Text('ANG MO KIO'),
+                          subtitle: Text('2 ROOM'),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            'This flat is situated in the storey range of ' +
+                                '01 TO 03' +
+                                ' and has a floor area of ' +
+                                '36' +
+                                'sqm',
+                            style:
+                                TextStyle(color: Colors.black.withOpacity(0.6)),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            TextButton(
+                              child: const Text('S\$ ' + '120000'),
+                              onPressed: null,
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                        ),
+                        //Image.asset('assets/card-sample-image.jpg'),
+                      ],
+                    ),
+                  ),
+            /*
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
             HdbTable(),
             PriceTable(),
+            */
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => PricingFormRoute()),
-            );
+        onPressed: () async {
+          final pricedHDB = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PricingFormRoute()),
+          ) as Hdb;
+
+          setState(() {
+            hdb = pricedHDB;
+          });
         },
         tooltip: 'Price HDB',
         child: const Icon(Icons.add),
@@ -121,7 +215,6 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
 
 class HdbTable extends StatefulWidget {
   @override
@@ -134,10 +227,7 @@ class _HdbTableState extends State<HdbTable> {
     const String town = "";
     return const Text(town);
   }
-
-
 }
-
 
 /// This is the stateless widget that the main application instantiates.
 class PriceTable extends StatelessWidget {
@@ -165,7 +255,6 @@ class PriceTable extends StatelessWidget {
             style: TextStyle(fontStyle: FontStyle.italic),
           ),
         ),
-        
       ],
       rows: const <DataRow>[
         DataRow(
@@ -173,15 +262,12 @@ class PriceTable extends StatelessWidget {
             DataCell(Text('ANG MO KIO	')),
             DataCell(Text('2 ROOM	')),
             DataCell(Text('10 TO 12	')),
-            
           ],
         ),
-        
       ],
     );
   }
 }
-
 
 class PricingFormRoute extends StatelessWidget {
   @override
