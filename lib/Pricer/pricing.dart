@@ -185,6 +185,10 @@ class PricingFormState extends State<PricingForm> {
                     errorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.amber),
                     ),
+                    focusedErrorBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.amber),
+                    ),
+                    
                     
                   ),
                   hint: Text(
@@ -232,6 +236,9 @@ class PricingFormState extends State<PricingForm> {
                     errorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.amber),
                     ),
+                    focusedErrorBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.amber),
+                    ),
                   ),
                   hint: Text(
                     'Choose a flat type', style: TextStyle(color: Colors.white70)
@@ -277,6 +284,9 @@ class PricingFormState extends State<PricingForm> {
                       borderSide: BorderSide(color: Colors.white70),
                     ),
                     errorBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.amber),
+                    ),
+                    focusedErrorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.amber),
                     ),
                   ),
@@ -331,6 +341,9 @@ class PricingFormState extends State<PricingForm> {
                     errorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.amber),
                     ),
+                    focusedErrorBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.amber),
+                    ),
                   ),
                   // The validator receives the text that the user has entered.
                   keyboardType: TextInputType.number,
@@ -377,6 +390,9 @@ class PricingFormState extends State<PricingForm> {
                       borderSide: BorderSide(color: Colors.white70),
                     ),
                     errorBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.amber),
+                    ),
+                    focusedErrorBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Colors.amber),
                     ),
                   ),
