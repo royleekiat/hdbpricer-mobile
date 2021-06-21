@@ -26,7 +26,21 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.teal,
+        primarySwatch: Colors.blueGrey,
+        scaffoldBackgroundColor: const Color(0xFF336869),
+        textTheme: TextTheme(
+          bodyText1: TextStyle(),
+          bodyText2: TextStyle(),
+          subtitle1: TextStyle(),
+        ).apply(
+          bodyColor: Colors.white70, 
+          displayColor: Colors.white70, 
+          decorationColor: Colors.white70,
+        ),
+        canvasColor: Colors.black/*
+        colorScheme: ThemeData().colorScheme.copyWith(
+          secondary: Colors.blue,
+        ),*/
       ),
       home: const MyHomePage(title: 'hdbpricer'),
     );
@@ -94,13 +108,21 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-
+            Image.asset('images/hdbpricer.png'),
             (hdb.resale_price == 0)
-                ? Text('Click on the "+" button below to price an HDB')
+                ? Text('Click on the "+" button below to price an HDB', style: TextStyle(height: 4, fontSize: 18),)
                 : Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+
+                    ),
+                    elevation: 5,
+                    margin: EdgeInsets.all(10),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
+                      
                       children: <Widget>[
+                        Image.asset('images/hdbskyline.jpg'),
                         ListTile(
                           leading: Icon(Icons.house),
                           title: Text(hdb.town),
@@ -111,43 +133,32 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Text(
                             'This flat was built in '+ hdb.lease_commence_date +' and is situated in the storey range of ' +
                                 hdb.storey_range +
-                                '.',
-                            style:
-                                TextStyle(color: Colors.black.withOpacity(0.6)),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text('It has a total floor area size of ' +
+                                ' ' + 'with a total floor area size of ' +
                                 hdb.floor_area_sqm.toString() +
-                                ' sqm',
+                                ' sqm.',
                             style:
                                 TextStyle(color: Colors.black.withOpacity(0.6)),
                           ),
+                          
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             TextButton(
                               child:  Text('S\$ ' + hdb.resale_price!.toString() ),
-                              onPressed: null,
+                              onPressed: (){},
+                              style:
+                                TextButton.styleFrom(textStyle: TextStyle( fontSize: 18, fontWeight: FontWeight.bold)),
                             ),
                             const SizedBox(width: 8),
+                            
                           ],
                         ),
-                        //Image.asset('assets/card-sample-image.jpg'),
+                        
                       ],
                     ),
                   ),
-            /*
-            Text(
-              '$hdb',
-              style: Theme.of(context).textTheme.headline4,
-            ),*/
-            /*
-            HdbTable(),
-            PriceTable(),
-            */
+                
           ],
         ),
       ),
@@ -177,8 +188,10 @@ class PricingFormRoute extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Price an HDB"),
+        
       ),
       body: Center(
+        
         child: PricingForm(),
       ),
     );
