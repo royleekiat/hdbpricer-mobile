@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         Image.asset('images/hdbskyline.jpg'),
                         ListTile(
                           leading: Icon(Icons.house),
-                          title: Text(hdb.town),
+                          title: Text(hdb.town,style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                           subtitle: Text(hdb.flat_type),
                         ),
                         Padding(
