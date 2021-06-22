@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:hdbpricermobile/Models/hdb.dart';
 import 'Pricer/pricing.dart';
+import 'Transactions/transactions.dart';
+import 'About/about.dart';
+import 'Insights/insights.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,31 +20,33 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'hdbpricer',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blueGrey,
-        scaffoldBackgroundColor: const Color(0xFF336869),
-        textTheme: TextTheme(
-          bodyText1: TextStyle(),
-          bodyText2: TextStyle(),
-          subtitle1: TextStyle(),
-        ).apply(
-          bodyColor: Colors.white70, 
-          displayColor: Colors.white70, 
-          decorationColor: Colors.white70,
-        ),
-        canvasColor: Colors.black/*
+          // This is the theme of your application.
+          //
+          // Try running your application with "flutter run". You'll see the
+          // application has a blue toolbar. Then, without quitting the app, try
+          // changing the primarySwatch below to Colors.green and then invoke
+          // "hot reload" (press "r" in the console where you ran "flutter run",
+          // or simply save your changes to "hot reload" in a Flutter IDE).
+          // Notice that the counter didn't reset back to zero; the application
+          // is not restarted.
+          primarySwatch: Colors.blueGrey,
+          scaffoldBackgroundColor: const Color(0xFF336869),
+          textTheme: TextTheme(
+            bodyText1: TextStyle(),
+            bodyText2: TextStyle(),
+            subtitle1: TextStyle(),
+          ).apply(
+            bodyColor: Colors.white70,
+            displayColor: Colors.white70,
+            decorationColor: Colors.white70,
+          ),
+          canvasColor: Colors.blueGrey
+
+          /*
         colorScheme: ThemeData().colorScheme.copyWith(
           secondary: Colors.blue,
         ),*/
-      ),
+          ),
       home: const MyHomePage(title: 'hdbpricer'),
     );
   }
@@ -73,7 +78,49 @@ class _MyHomePageState extends State<MyHomePage> {
       resale_price: 0,
       storey_range: '',
       floor_area_sqm: 0);
-  
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    switch (_selectedIndex) {
+      case 0:
+        //do nothing
+        break;
+      case 1:
+        setState(() {
+          _selectedIndex = 0;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => TransactionsTableRoute()),
+        );
+
+        break;
+      case 2:
+        setState(() {
+          _selectedIndex = 0;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => InsightsRoute()),
+        );
+        break;
+
+      case 3:
+        setState(() {
+          _selectedIndex = 0;
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AboutPageRoute()),
+        );
+        break;
+      default:
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -110,55 +157,63 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Image.asset('images/hdbpricer.png'),
             (hdb.resale_price == 0)
-                ? Text('Click on the "+" button below to price an HDB', style: TextStyle(height: 4, fontSize: 18),)
+                ? Text(
+                    'Click on the "+" button below to price an HDB',
+                    style: TextStyle(height: 4, fontSize: 18),
+                  )
                 : Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
-
                     ),
                     elevation: 5,
                     margin: EdgeInsets.all(10),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
-                      
                       children: <Widget>[
                         Image.asset('images/hdbskyline.jpg'),
                         ListTile(
                           leading: Icon(Icons.house),
-                          title: Text(hdb.town,style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                          title: Text(
+                            hdb.town,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
                           subtitle: Text(hdb.flat_type),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
-                            'This flat was built in '+ hdb.lease_commence_date +' and is situated in the storey range of ' +
+                            'This flat was built in ' +
+                                hdb.lease_commence_date +
+                                ' and is situated in the storey range of ' +
                                 hdb.storey_range +
-                                ' ' + 'with a total floor area size of ' +
+                                ' ' +
+                                'with a total floor area size of ' +
                                 hdb.floor_area_sqm.toString() +
                                 ' sqm.',
                             style:
                                 TextStyle(color: Colors.black.withOpacity(0.6)),
                           ),
-                          
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: <Widget>[
                             TextButton(
-                              child:  Text('S\$ ' + hdb.resale_price!.toString() ),
-                              onPressed: (){},
-                              style:
-                                TextButton.styleFrom(textStyle: TextStyle( fontSize: 18, fontWeight: FontWeight.bold)),
+                              child:
+                                  Text('S\$ ' + hdb.resale_price!.toString()),
+                              onPressed: () {},
+                              style: TextButton.styleFrom(
+                                  textStyle: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
                             ),
                             const SizedBox(width: 8),
-                            
                           ],
                         ),
-                        
                       ],
                     ),
                   ),
-                
           ],
         ),
       ),
@@ -175,12 +230,38 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         tooltip: 'Price HDB',
         child: const Icon(Icons.add),
+      ),
+
+      bottomNavigationBar: BottomNavigationBar(
+        //fixedColor: Colors.white30,
+        unselectedItemColor: Colors.white30,
+        showUnselectedLabels: true,
+        backgroundColor: Colors.blueGrey,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.business),
+            label: 'Transactions',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.insights),
+            label: 'Insights',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.handyman),
+            label: 'About',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.white,
+        onTap: _onItemTapped,
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
-
-
 
 class PricingFormRoute extends StatelessWidget {
   @override
@@ -188,11 +269,51 @@ class PricingFormRoute extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Price an HDB"),
-        
       ),
       body: Center(
-        
         child: PricingForm(),
+      ),
+    );
+  }
+}
+
+class TransactionsTableRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Transactions"),
+      ),
+      body: Center(
+        child: TransactionsTable(),
+      ),
+    );
+  }
+}
+
+class InsightsRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Insights"),
+      ),
+      body: Center(
+        child: Insights(),
+      ),
+    );
+  }
+}
+
+class AboutPageRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("About this app"),
+      ),
+      body: Center(
+        child: AboutPage(),
       ),
     );
   }
