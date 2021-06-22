@@ -1,15 +1,16 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:hdbpricermobile/Models/hdb.dart';
 import 'Pricer/pricing.dart';
 import 'Transactions/transactions.dart';
 import 'About/about.dart';
 import 'Insights/insights.dart';
+import 'utils.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -28,8 +29,8 @@ class MyApp extends StatelessWidget {
           // "hot reload" (press "r" in the console where you ran "flutter run",
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blueGrey,
+          // is not restarted.5
+          primarySwatch: generateMaterialColor(Palette.primary),
           scaffoldBackgroundColor: const Color(0xFF336869),
           textTheme: TextTheme(
             bodyText1: TextStyle(),
@@ -40,8 +41,8 @@ class MyApp extends StatelessWidget {
             displayColor: Colors.white70,
             decorationColor: Colors.white70,
           ),
-          canvasColor: Colors.blueGrey
-
+          canvasColor: const Color(0xFF234647),
+ 
           /*
         colorScheme: ThemeData().colorScheme.copyWith(
           secondary: Colors.blue,
@@ -162,6 +163,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     style: TextStyle(height: 4, fontSize: 18),
                   )
                 : Card(
+                  color: Colors.white70,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                     ),
@@ -170,7 +172,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        Image.asset('images/hdbskyline.jpg'),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child:
+                          Image.asset('images/hdbskyline.jpg')
+                        ),
                         ListTile(
                           leading: Icon(Icons.house),
                           title: Text(
@@ -236,7 +242,7 @@ class _MyHomePageState extends State<MyHomePage> {
         //fixedColor: Colors.white30,
         unselectedItemColor: Colors.white30,
         showUnselectedLabels: true,
-        backgroundColor: Colors.blueGrey,
+        backgroundColor: generateMaterialColor(Palette.primary),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
