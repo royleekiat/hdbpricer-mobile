@@ -1,5 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+var priceformatter = NumberFormat('#,###,000');
 
 MaterialColor generateMaterialColor(Color color) {
   return MaterialColor(color.value, {

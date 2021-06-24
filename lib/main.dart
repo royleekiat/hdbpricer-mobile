@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hdbpricermobile/Models/hdb.dart';
 import 'Pricer/pricing.dart';
-import 'Transactions/transactions.dart';
+import 'Transactions/transactions_table.dart';
 import 'About/about.dart';
 import 'Insights/insights.dart';
 import 'utils.dart';
@@ -156,7 +156,11 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.asset('images/hdbpricer.png'),
+            (hdb.resale_price == 0)
+              ? Image.asset('images/hdbpricer.png', scale: 1)
+              : Positioned(
+                child: Image.asset('images/hdbpricer.png', scale: 2.0)
+              ),
             (hdb.resale_price == 0)
                 ? Text(
                     'Click on the "+" button below to price an HDB',
@@ -207,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: <Widget>[
                             TextButton(
                               child:
-                                  Text('S\$ ' + hdb.resale_price!.toString()),
+                                  Text('S\$ ' + priceformatter.format(hdb.resale_price!).toString()),
                               onPressed: () {},
                               style: TextButton.styleFrom(
                                   textStyle: TextStyle(
@@ -283,19 +287,7 @@ class PricingFormRoute extends StatelessWidget {
   }
 }
 
-class TransactionsTableRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Transactions"),
-      ),
-      body: Center(
-        child: TransactionsTable(),
-      ),
-    );
-  }
-}
+
 
 class InsightsRoute extends StatelessWidget {
   @override
