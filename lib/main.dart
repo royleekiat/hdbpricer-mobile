@@ -289,19 +289,7 @@ class PricingFormRoute extends StatelessWidget {
 
 
 
-class InsightsRoute extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Insights"),
-      ),
-      body: Center(
-        child: Insights(),
-      ),
-    );
-  }
-}
+
 
 class AboutPageRoute extends StatelessWidget {
   @override

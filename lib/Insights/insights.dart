@@ -56,6 +56,7 @@ class _InsightsState extends State<Insights> {
                 onChanged: (String? newValue) {
                   setState(() {
                     town = newValue!;
+                    medianPriceInsights = getMedianPriceInsights(town);
                   });
                 },
                 items: <String>[
@@ -97,21 +98,45 @@ class _InsightsState extends State<Insights> {
             AspectRatio(
               aspectRatio: 1.0,
               child:  Container(
-                decoration: BoxDecoration(
-                    border:
-                        Border.all(color: const Color(0xFF336869), width: 15),
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    color: Color(0xff232d37)),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      right: 18.0, left: 12.0, top: 24, bottom: 12),
-                  child: LineChart(
-                    showAvg ? avgData() : mainData(medianPriceInsights),
-                  ),
-                ),
-              ),
+                child: FutureBuilder<MedianPriceInsights>(
+                  future: medianPriceInsights,
+                  builder: (BuildContext context, AsyncSnapshot<MedianPriceInsights> snapshot) {
+                    if (snapshot.hasData && snapshot.connectionState == ConnectionState.done) {
+                      //print(snapshot.data!.five_room);
+                      return Container(
+                        decoration: BoxDecoration(
+                            border:
+                                Border.all(color: const Color(0xFF336869), width: 15),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                            color: Color(0xff232d37)),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              right: 18.0, left: 12.0, top: 24, bottom: 12),
+                          child: LineChart(
+                            showAvg ? avgData() : mainData(snapshot.data),
+                          ),
+                        ),
+                      );
+                    }else if(snapshot.hasError){
+                      return Container(
+                        child: Text('Could not load chart due to Error: ${snapshot.error}'),
+                      );
+                    }else{
+                      return Container(
+                        padding:  const EdgeInsets.all(30.0),
+                        child: const SizedBox(
+                          child: LinearProgressIndicator(backgroundColor: Color(0xFF234647),valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF336869)),),
+                          width: 10,
+                          height: 10,
+                        ),
+                      );
+                    }
+                    
+                  }
+                )
+              ) 
             ),
             /*SizedBox(
           width: 60,
@@ -137,7 +162,7 @@ class _InsightsState extends State<Insights> {
     );
   }
 
-  LineChartData mainData(medianPriceInsights) {
+  LineChartData mainData(MedianPriceInsights? medianPriceInsights) {
     return LineChartData(
       gridData: FlGridData(
         show: true,
@@ -157,7 +182,7 @@ class _InsightsState extends State<Insights> {
       ),
       axisTitleData: FlAxisTitleData(
         topTitle: AxisTitle(
-            titleText: 'Median Resale Price (S\$)',
+            titleText: 'Median Resale Price (S\$)' + medianPriceInsights!.five_room![0].toString(),
             showTitle: true,
             margin: 20,
             textStyle:

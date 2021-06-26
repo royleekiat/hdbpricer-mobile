@@ -36,7 +36,6 @@ class TransactionsTableRoute extends StatelessWidget {
             case ConnectionState.done:
               if(snapshot.data!.isNotEmpty){
                 List<Transaction>? transactions = snapshot.data;
-                print(snapshot.hasData);
                 return ListView.separated(
                   itemBuilder: (BuildContext context, int index){
                     Transaction _transaction = transactions![index];
@@ -64,22 +63,3 @@ class TransactionsTableRoute extends StatelessWidget {
   }
 }
 
-class TransactionsTable extends StatefulWidget {
-  const TransactionsTable({ Key? key }) : super(key: key);
-
-  @override
-  _TransactionsTableState createState() => _TransactionsTableState();
-}
-
-class _TransactionsTableState extends State<TransactionsTable> {
-  @override
-  Future<Transaction>? _futureTransaction;
-  Widget build(BuildContext context) {
-    // ignore: avoid_unnecessary_containers
-    return Container(
-      child: 
-       const Text('')
-      
-    );
-  }
-}

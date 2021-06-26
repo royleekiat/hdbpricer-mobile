@@ -45,7 +45,6 @@ class TransactionSearchDelegate extends SearchDelegate {
               if(snapshot.data!.isNotEmpty){
             
                 List<Transaction>? transactions = snapshot.data;
-                print(snapshot.data);
                 return ListView.separated(
                   itemBuilder: (BuildContext context, int index){
                     Transaction _transaction = transactions![index];
