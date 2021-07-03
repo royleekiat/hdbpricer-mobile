@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hdbpricermobile">
+   <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="hdbpricermobile"
+        android:label="hdbpricer"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
