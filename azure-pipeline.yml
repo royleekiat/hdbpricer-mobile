@@ -11,8 +11,8 @@ jobs:
     steps:
     - task: FlutterInstall@0
       inputs:
-        channel: 'dev'
-        version: '2.3.0-24.0.pre'
+        channel: 'stable'
+        version: 'latest'
     
     - task: FlutterBuild@0
       inputs:
