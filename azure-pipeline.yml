@@ -12,7 +12,7 @@ jobs:
     - task: FlutterInstall@0
       inputs:
         channel: 'stable'
-        version: 'latest'
+        version: '2.3.0-24.0.pre'
     
     - task: FlutterBuild@0
       inputs:
