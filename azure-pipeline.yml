@@ -1,4 +1,5 @@
 # Flutter build
+name: $(BuildID)
 variables:
 - group: hdbpricer
 trigger:
