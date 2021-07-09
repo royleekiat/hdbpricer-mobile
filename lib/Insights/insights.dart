@@ -122,6 +122,72 @@ class _InsightsState extends State<Insights> {
                 }).toList(),
               )),
             ),
+            Padding(padding: EdgeInsets.only(top:10)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                //Padding(padding: EdgeInsets.only(left:17, top:150)),
+                Text(' 1 ROOM ',
+                    style: TextStyle(
+                      backgroundColor: const Color(0xff5F4690),
+                      height: 1.5,
+                      letterSpacing: 1.2,
+                    )),
+                Padding(padding: EdgeInsets.only(left: 5)),
+                Text(' 2 ROOM ',
+                    style: TextStyle(
+                      backgroundColor: const Color(0xff1D6996),
+                      height: 1.5,
+                      letterSpacing: 1.2,
+                    )),
+                Padding(padding: EdgeInsets.only(left: 5)),
+                Text(' 3 ROOM ',
+                    style: TextStyle(
+                        backgroundColor: const Color(0xff38a6a5),
+                        height: 1.5,
+                      letterSpacing: 1.2,
+                        color: Colors.black)),
+                Padding(padding: EdgeInsets.only(left: 5)),
+                Text(' 4 ROOM ',
+                    style: TextStyle(
+                        backgroundColor: const Color(0xffedad08),
+                        height: 1.5,
+                      letterSpacing: 1.2,
+                        color: Colors.black)),
+                Padding(padding: EdgeInsets.only(left: 5)),
+              ],
+            ),
+            Padding(padding: EdgeInsets.only(top:5)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                //Padding(padding: EdgeInsets.only(left:17, top:150)),
+                Text(' 5 ROOM ',
+                    style: TextStyle(
+                      backgroundColor: const Color(0xffcc503e),
+                      height: 1.5,
+                      letterSpacing: 1.2,
+                    )),
+                Padding(padding: EdgeInsets.only(left: 5)),
+                Text(' EXEC ',
+                    style: TextStyle(
+                        backgroundColor: const Color(0xffaba9a9),
+                        height: 1.5,
+                      letterSpacing: 1.2,
+                        color: Colors.black)),
+                Padding(padding: EdgeInsets.only(left: 5)),
+                Text(' MULTI-GEN ',
+                    style: TextStyle(
+                        backgroundColor: const Color(0xfff52cdd),
+                        height: 1.5,
+                      letterSpacing: 1.2,
+                        color: Colors.black)),
+                Padding(padding: EdgeInsets.only(left: 5)),
+              ],
+            ),
+            Padding(padding: EdgeInsets.only(top:10)),
             AspectRatio(
                 aspectRatio: 1.0,
                 child: Container(
@@ -133,50 +199,29 @@ class _InsightsState extends State<Insights> {
                               snapshot.connectionState ==
                                   ConnectionState.done) {
                             //print(snapshot.data!.five_room);
-                            return Stack(
-                              children:[
-                                Container(
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: const Color(0xFF336869),
-                                          width: 15),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
-                                      ),
-                                      color: Color(0xff232d37)),
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(
-                                        right: 18.0,
-                                        left: 12.0,
-                                        top: 24,
-                                        bottom: 12),
-                                    child: LineChart(
-                                      mainData(snapshot.data), //showAvg ? avgData() : 
+                            return Stack(children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: const Color(0xFF336869),
+                                        width: 15),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10),
                                     ),
+                                    color: Color(0xff232d37)),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 18.0,
+                                      left: 12.0,
+                                      top: 24,
+                                      bottom: 12),
+                                  child: LineChart(
+                                    mainData(
+                                        snapshot.data), //showAvg ? avgData() :
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Padding(padding: EdgeInsets.only(left:17, top:150)),
-                                    Text('1 ROOM', style: TextStyle(backgroundColor: const Color(0xff5F4690), )),
-                                    Padding(padding: EdgeInsets.only(left:5)),
-                                    Text('2 ROOM', style: TextStyle(backgroundColor: const Color(0xff1D6996), )),
-                                    Padding(padding: EdgeInsets.only(left:5)),
-                                    Text('3 ROOM', style: TextStyle(backgroundColor: const Color(0xff38a6a5), color: Colors.black)),
-                                    Padding(padding: EdgeInsets.only(left:5)),
-                                    Text('4 ROOM', style: TextStyle(backgroundColor: const Color(0xffedad08), color: Colors.black)),
-                                    Padding(padding: EdgeInsets.only(left:5)),
-                                    Text('5 ROOM ', style: TextStyle(backgroundColor: const Color(0xffcc503e), )),
-                                    Padding(padding: EdgeInsets.only(left:5)),
-                                    Text('EXEC', style: TextStyle(backgroundColor: const Color(0xffaba9a9), color: Colors.black)),
-                                    Padding(padding: EdgeInsets.only(left:5)),
-                                    Text('MULTI-GEN', style: TextStyle(backgroundColor: const Color(0xfff52cdd), color: Colors.black)),
-                                    Padding(padding: EdgeInsets.only(left:5)),
-                                  ],
-
-                                ),
-                              ]
-                            );
+                              ),
+                            ]);
                           } else if (snapshot.hasError) {
                             return Container(
                               child: Text(
@@ -227,55 +272,54 @@ class _InsightsState extends State<Insights> {
 
       List<LineChartBarData> linechartbardataList = [];
 
-      
-
-      for (var i = 0; i <7; i++) {
+      for (var i = 0; i < 7; i++) {
         List<FlSpot> spotList = [];
         List<double> medianPriceList = [];
         switch (i) {
-          case 0: 
-            if(medianPriceInsights.one_room!=null){
+          case 0:
+            if (medianPriceInsights.one_room != null) {
               medianPriceList = medianPriceInsights.one_room!.cast<double>();
             }
             break;
-          case 1: 
-            if(medianPriceInsights.two_room!=null){
-            medianPriceList = medianPriceInsights.two_room!.cast<double>();
+          case 1:
+            if (medianPriceInsights.two_room != null) {
+              medianPriceList = medianPriceInsights.two_room!.cast<double>();
             }
             break;
-          case 2: 
-            if(medianPriceInsights.three_room!=null){
+          case 2:
+            if (medianPriceInsights.three_room != null) {
               medianPriceList = medianPriceInsights.three_room!.cast<double>();
             }
             break;
-          case 3: 
-            if(medianPriceInsights.four_room!=null){
+          case 3:
+            if (medianPriceInsights.four_room != null) {
               medianPriceList = medianPriceInsights.four_room!.cast<double>();
             }
             break;
-          case 4: 
-            if(medianPriceInsights.five_room!=null){
+          case 4:
+            if (medianPriceInsights.five_room != null) {
               medianPriceList = medianPriceInsights.five_room!.cast<double>();
             }
             break;
-          case 5: 
-            if(medianPriceInsights.executive!=null){
+          case 5:
+            if (medianPriceInsights.executive != null) {
               medianPriceList = medianPriceInsights.executive!.cast<double>();
             }
             break;
-          case 6: 
-            if(medianPriceInsights.multi_generation!=null){
-              medianPriceList = medianPriceInsights.multi_generation!.cast<double>();
+          case 6:
+            if (medianPriceInsights.multi_generation != null) {
+              medianPriceList =
+                  medianPriceInsights.multi_generation!.cast<double>();
             }
             break;
         }
 
-        if(medianPriceList.length >0){
-        
+        if (medianPriceList.length > 0 && medianPriceList.length == labels.length) {
           var labelCounter = 0;
           for (var label in labels) {
-              spotList.add(FlSpot(label.toDouble(),medianPriceList[labelCounter]));
-              labelCounter++;
+            spotList
+                .add(FlSpot(label.toDouble(), medianPriceList[labelCounter]));
+            labelCounter++;
           }
 
           linechartbardataList.add(
@@ -287,7 +331,6 @@ class _InsightsState extends State<Insights> {
               isStrokeCapRound: true,
               dotData: FlDotData(
                 show: true,
-                
               ),
               belowBarData: BarAreaData(
                 show: false,
@@ -319,7 +362,7 @@ class _InsightsState extends State<Insights> {
         ),
         axisTitleData: FlAxisTitleData(
           topTitle: AxisTitle(
-              titleText: 'Median Resale Price (S\$)' ,
+              titleText: 'Median Resale Price (S\$)',
               showTitle: true,
               margin: 20,
               textStyle: TextStyle(
@@ -371,7 +414,7 @@ class _InsightsState extends State<Insights> {
             show: true,
             border: Border.all(color: const Color(0xff37434d), width: 1)),
         minX: (labels[0]).toDouble(),
-        maxX: (labels[labels.length-1]).toDouble(),
+        maxX: (labels[labels.length - 1]).toDouble(),
         minY: 150000,
         maxY: 1100000,
         lineBarsData: linechartbardataList,
@@ -457,8 +500,7 @@ class _InsightsState extends State<Insights> {
         maxY: 6,
         lineBarsData: [
           LineChartBarData(
-            spots: [
-            ],
+            spots: [],
             isCurved: true,
             colors: gradientColors[0],
             barWidth: 5,

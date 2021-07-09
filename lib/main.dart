@@ -139,7 +139,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
-        child: Column(
+        child: Stack(
+          alignment: Alignment.center,
           // Column is also a layout widget. It takes a list of children and
           // arranges them vertically. By default, it sizes itself to fit its
           // children horizontally, and tries to be as tall as its parent.
@@ -154,18 +155,79 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+          //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            (hdb.resale_price == 0)
+            /*(hdb.resale_price == 0)
               ? Image.asset('images/hdbpricer.png', scale: 1)
               : Positioned(
                 child: Image.asset('images/hdbpricer.png', scale: 2.0)
-              ),
+              ),*/
             (hdb.resale_price == 0)
-                ? Text(
+                ? Card(
+                  color: Colors.black12,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    elevation: 5,
+                    margin: EdgeInsets.all(50),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10.0),
+                          child:
+                          Image.asset('images/hdbpricer.png')
+                        ),
+                        ListTile(
+                          tileColor: Colors.black12,
+                          title: Text(
+                            'Price an HDB',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                          ),
+                          subtitle: Text('Click on the "+" button below', style: TextStyle(
+                                color: Colors.white70),
+                                textAlign: TextAlign.center,),
+                        ),
+                        /*Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            'This flat was built in ' +
+                                hdb.lease_commence_date +
+                                ' and is situated in the storey range of ' +
+                                hdb.storey_range +
+                                ' ' +
+                                'with a total floor area size of ' +
+                                hdb.floor_area_sqm.toString() +
+                                ' sqm.',
+                            style:
+                                TextStyle(color: Colors.black.withOpacity(0.6)),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            TextButton(
+                              child:
+                                  Text('S\$ ' + priceformatter.format(hdb.resale_price!).toString()),
+                              onPressed: () {},
+                              style: TextButton.styleFrom(
+                                  textStyle: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                        ),*/
+                      ],
+                    ),
+                  )/*Text(
                     'Click on the "+" button below to price an HDB',
                     style: TextStyle(height: 4, fontSize: 18),
-                  )
+                  )*/
                 : Card(
                   color: Colors.white70,
                     shape: RoundedRectangleBorder(
@@ -211,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: <Widget>[
                             TextButton(
                               child:
-                                  Text('S\$ ' + priceformatter.format(hdb.resale_price!).toString()),
+                                  Text('Approx. S\$ ' + priceformatter.format((hdb.resale_price!-20000)).toString() + ' ~ ' + priceformatter.format((hdb.resale_price!+20000)).toString()),
                               onPressed: () {},
                               style: TextButton.styleFrom(
                                   textStyle: TextStyle(

@@ -36,17 +36,21 @@ class TransactionsTableRoute extends StatelessWidget {
             case ConnectionState.done:
               if(snapshot.data!.isNotEmpty){
                 List<Transaction>? transactions = snapshot.data;
-                return ListView.separated(
+                return ListView.builder(
                   itemBuilder: (BuildContext context, int index){
                     Transaction _transaction = transactions![index];
-                      return ListTile(
-                        title: Text(_transaction.town ),
-                        subtitle: Text('Flat type: ' + _transaction.flat_type + ' | ' + _transaction.flat_model + '\nSold: ' + _transaction.month + '\nFloor area: ' + _transaction.floor_area_sqm.toString() + 'sqm \n' + 'Address: ' + _transaction.block + ', ' + _transaction.street_name + '\n' + _transaction.storey_range + ' Floor \nLease commence year: ' + _transaction.lease_commence_date + ' \n(' + _transaction.remaining_lease + ' remaining)'   ),
-                        leading: Icon(Icons.house),
-                        trailing: Text('S\$ ' + (priceformatter.format(_transaction.resale_price)).toString(),style: (TextStyle(fontWeight: FontWeight.bold, color: Colors.amber)),),
-                      );
+                      return Card(
+                        color: Colors.black26,
+                        elevation: 5,
+                        margin: EdgeInsets.only(left: 10, right: 10, bottom: 5, top: 5),
+                        child: ListTile(
+                          title: Text(_transaction.town , style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),),
+                          subtitle: Text('Flat type: ' + _transaction.flat_type + ' | ' + _transaction.flat_model + '\nSold: ' + _transaction.month + '\nFloor area: ' + _transaction.floor_area_sqm.toString() + 'sqm \n' + 'Address: ' + _transaction.block + ', ' + _transaction.street_name + '\n' + _transaction.storey_range + ' Floor \nLease commence year: ' + _transaction.lease_commence_date , style: TextStyle(color: Colors.white70),   ),
+                          leading: Icon(Icons.house,color: Colors.white70,),
+                          trailing: Text('S\$ ' + (priceformatter.format(_transaction.resale_price)).toString(),style: (TextStyle(fontWeight: FontWeight.bold, color: Colors.amber)),),
+                      ));
                   }, 
-                  separatorBuilder: (BuildContext context, int index) => Divider(),
+                  //separatorBuilder: (BuildContext context, int index) => Divider(),
                   itemCount: transactions?.length ?? 0,
                 );
               }else{

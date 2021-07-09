@@ -63,11 +63,11 @@ class _AboutPageState extends State<AboutPage> {
           ),
         ),
         Step(
-          title: Text('I would like to fork and contribute to this project.'),
+          title: Text('I would like to submit feedback and suggestions.'),
           content: Container(
             alignment: Alignment.centerLeft,
-            child: InkWell(child: Text('Visit github.com/royleekiat'),
-              onTap: () => launch('https://github.com/royleekiat'),
+            child: InkWell(child: Text('Feel free to drop an email to hdbpricer@gmail.com'),
+              onTap: () => launch('mailto:hdbpricer@gmail.com'),
             )
           ),
         ),
