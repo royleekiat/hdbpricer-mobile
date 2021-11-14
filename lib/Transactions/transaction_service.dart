@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 class TransactionService {
 
-  static const String _url = 'https://data.gov.sg/api/action/datastore_search?resource_id=42ff9cfe-abe5-4b54-beda-c88f9bb438ee&sort=month%20desc&limit=2000';
+  static const String _url = 'https://data.gov.sg/api/action/datastore_search?resource_id=f1765b54-a209-4718-8d38-a39237f502b3&sort=month%20desc&limit=2000';
   static Future<List<Transaction>> getTransactions({query}) async{
 
     
